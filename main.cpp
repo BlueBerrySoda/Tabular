@@ -68,15 +68,6 @@ int check(string inputList[][3], string outputList[][3], int inputNum, int outpu
     }
 }
 
-int numOfOne(string bin){
-    int one = 0;
-    for(int i = 0; i<4; i++){
-        if(bin[i] == '1')
-            one++;
-    }
-    return one;
-}
-
 string makeBin(int n){
     string Bin = "0000";
     for(int i = 3; i>=0; i--){
