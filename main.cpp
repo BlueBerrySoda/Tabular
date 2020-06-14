@@ -38,6 +38,64 @@ string newBin(string a, string b){
     return newbin;
 }
 
+void check8(){
+    for(int i = 0; i<num8pi; i++){
+        for(int j = 0; j<num8pi; j++){
+            if(hd(size8PI[i][1], size8PI[j][1])){
+                string tmp = newBin(size8PI[i][1], size8PI[j][1]);
+                int same = false;
+                for(int i = 0; i<=num8pi; i++){
+                    if(tmp.compare(size16PI[i][1]) == 0)
+                        same = true;
+                }
+                if(!same){
+                    size8PI[num16pi][0] = size8PI[i][0] + " " + size8PI[j][0];
+                    size8PI[num16pi++][1] = tmp;    
+                }
+                size8PI[i][2] = "1";
+                size8PI[j][2] = "1";
+            }
+        }
+    }
+    for(int i = 0; i<num8pi; i++){
+        if(size8PI[i][2] != "1")
+            cout << size8PI[i][0] << "\n";
+    }
+
+    if(num16pi <= 1)
+        cout << size8PI[0][0] << "\n";
+}
+
+void check4(){
+    for(int i = 0; i<num4pi; i++){
+        for(int j = 0; j<num4pi; j++){
+            if(hd(size4PI[i][1], size4PI[j][1])){
+                string tmp = newBin(size4PI[i][1], size4PI[j][1]);
+                int same = false;
+                for(int i = 0; i<=num4pi; i++){
+                    if(tmp.compare(size8PI[i][1]) == 0)
+                        same = true;
+                }
+                if(!same){
+                    size4PI[num8pi][0] = size4PI[i][0] + " " + size4PI[j][0];
+                    size4PI[num8pi++][1] = tmp;    
+                }
+                size4PI[i][2] = "1";
+                size4PI[j][2] = "1";
+            }
+        }
+    }
+    for(int i = 0; i<num4pi; i++){
+        if(size4PI[i][2] != "1")
+            cout << size4PI[i][0] << "\n";
+    }
+
+    if(num8pi > 1)
+        check8();
+    else
+        cout << size8PI[0][0] << "\n";
+}
+
 void check2(){
     for(int i = 0; i<num2pi; i++){
         for(int j = 0; j<num2pi; j++){
@@ -63,8 +121,7 @@ void check2(){
     }
 
     if(num4pi > 1)
-        return;
-        // check4();
+        check4();
     else
         cout << size4PI[0][0] << "\n";
 }
