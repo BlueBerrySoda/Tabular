@@ -1,5 +1,4 @@
 #include <iostream>
-#include <bitset>
 using namespace std;
 
 int num = 4;
@@ -42,10 +41,10 @@ int check(string inputList[][3], string outputList[][3], int inputNum, int outpu
         for(int j = 0; j<inputNum; j++){
             if(hd(inputList[i][1], inputList[j][1])){
                 string tmp = newBin(inputList[i][1], inputList[j][1]);
-                int same = false;
+                int same = 0;
                 for(int i = 0; i<=inputNum; i++){
                     if(tmp.compare(outputList[i][1]) == 0)
-                        same = true;
+                        same = 1;
                 }
                 if(!same){
                     outputList[outputNum][0] = inputList[i][0] + " " + inputList[j][0];
