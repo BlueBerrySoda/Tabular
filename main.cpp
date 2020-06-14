@@ -3,9 +3,8 @@
 using namespace std;
 
 int num = 4;
-int numOfMinterm = 6;
-int numOfDoncare = 2;
-int sumOfNum = numOfDoncare+numOfMinterm;
+int numOfMinterm = 0;
+int numOfDoncare = 0;
 
 string size1PI[16][3];
 string size2PI[32][3];
@@ -38,122 +37,35 @@ string newBin(string a, string b){
     return newbin;
 }
 
-void check8(){
-    for(int i = 0; i<num8pi; i++){
-        for(int j = 0; j<num8pi; j++){
-            if(hd(size8PI[i][1], size8PI[j][1])){
-                string tmp = newBin(size8PI[i][1], size8PI[j][1]);
+int check(string inputList[][3], string outputList[][3], int inputNum, int outputNum){
+    for(int i = 0; i<inputNum; i++){
+        for(int j = 0; j<inputNum; j++){
+            if(hd(inputList[i][1], inputList[j][1])){
+                string tmp = newBin(inputList[i][1], inputList[j][1]);
                 int same = false;
-                for(int i = 0; i<=num8pi; i++){
-                    if(tmp.compare(size16PI[i][1]) == 0)
+                for(int i = 0; i<=inputNum; i++){
+                    if(tmp.compare(outputList[i][1]) == 0)
                         same = true;
                 }
                 if(!same){
-                    size8PI[num16pi][0] = size8PI[i][0] + " " + size8PI[j][0];
-                    size8PI[num16pi++][1] = tmp;    
+                    outputList[outputNum][0] = inputList[i][0] + " " + inputList[j][0];
+                    outputList[outputNum++][1] = tmp;    
                 }
-                size8PI[i][2] = "1";
-                size8PI[j][2] = "1";
+                inputList[i][2] = "1";
+                inputList[j][2] = "1";
             }
         }
     }
-    for(int i = 0; i<num8pi; i++){
-        if(size8PI[i][2] != "1")
-            cout << size8PI[i][0] << "\n";
+    for(int i = 0; i<inputNum; i++){
+        if(inputList[i][2] != "1")
+            cout << inputList[i][0] << "\n";
     }
 
-    if(num16pi <= 1)
-        cout << size8PI[0][0] << "\n";
-}
-
-void check4(){
-    for(int i = 0; i<num4pi; i++){
-        for(int j = 0; j<num4pi; j++){
-            if(hd(size4PI[i][1], size4PI[j][1])){
-                string tmp = newBin(size4PI[i][1], size4PI[j][1]);
-                int same = false;
-                for(int i = 0; i<=num4pi; i++){
-                    if(tmp.compare(size8PI[i][1]) == 0)
-                        same = true;
-                }
-                if(!same){
-                    size4PI[num8pi][0] = size4PI[i][0] + " " + size4PI[j][0];
-                    size4PI[num8pi++][1] = tmp;    
-                }
-                size4PI[i][2] = "1";
-                size4PI[j][2] = "1";
-            }
-        }
+    if(outputNum > 1)
+        return 1, outputNum;
+    else{
+        return 0, outputNum;
     }
-    for(int i = 0; i<num4pi; i++){
-        if(size4PI[i][2] != "1")
-            cout << size4PI[i][0] << "\n";
-    }
-
-    if(num8pi > 1)
-        check8();
-    else
-        cout << size8PI[0][0] << "\n";
-}
-
-void check2(){
-    for(int i = 0; i<num2pi; i++){
-        for(int j = 0; j<num2pi; j++){
-            if(hd(size2PI[i][1], size2PI[j][1])){
-                string tmp = newBin(size2PI[i][1], size2PI[j][1]);
-                int same = false;
-                for(int i = 0; i<=num2pi; i++){
-                    if(tmp.compare(size4PI[i][1]) == 0)
-                        same = true;
-                }
-                if(!same){
-                    size4PI[num4pi][0] = size2PI[i][0] + " " + size2PI[j][0];
-                    size4PI[num4pi++][1] = tmp;    
-                }
-                size2PI[i][2] = "1";
-                size2PI[j][2] = "1";
-            }
-        }
-    }
-    for(int i = 0; i<num2pi; i++){
-        if(size2PI[i][2] != "1")
-            cout << size2PI[i][0] << "\n";
-    }
-
-    if(num4pi > 1)
-        check4();
-    else
-        cout << size4PI[0][0] << "\n";
-}
-
-void check1(){
-    for(int i = 0; i<sumOfNum; i++){
-        for(int j = 0; j<sumOfNum; j++){
-            if(hd(size1PI[i][1], size1PI[j][1])){
-                string tmp = newBin(size1PI[i][1], size1PI[j][1]);
-                int same = false;
-                for(int i = 0; i<=sumOfNum; i++){
-                    if(tmp.compare(size2PI[i][1]) == 0)
-                        same = true;
-                }
-                if(!same){
-                    size2PI[num2pi][0] = size1PI[i][0] + " " + size1PI[j][0];
-                    size2PI[num2pi++][1] = tmp;
-                }
-                size1PI[i][2] = "1";
-                size1PI[j][2] = "1";
-            }
-        }
-    }
-    for(int i = 0; i<sumOfNum; i++){
-        if(size1PI[i][2] != "1")
-            cout << size1PI[i][0] << "\n";
-    }
-
-    if(num2pi > 1)
-        check2();
-    else
-        cout << size2PI[0][0] << "\n";
 }
 
 int numOfOne(string bin){
@@ -176,11 +88,24 @@ string makeBin(int n){
 }
 
 int main(){    
-    int tmp;
-    for(int i = 0; i<sumOfNum; i++){
+    int tmp, pi;
+    cout << "----Input number of minterms----\n";
+    cin >> numOfMinterm;
+    cout << "----Input number of doncares----\n";
+    cin >> numOfDoncare;
+    num1pi = numOfDoncare + numOfMinterm;
+    cout << "-------Please input data--------\n";
+    for(int i = 0; i<num1pi; i++){
         cin >> tmp;
         size1PI[i][0] = to_string(tmp);
         size1PI[i][1] = makeBin(tmp);
     }
-    check1();
+    cout << "----------Print PI List---------\n";
+    pi, num2pi = check(size1PI, size2PI, num1pi, num2pi);
+    if(pi)
+        pi, num4pi = check(size2PI, size4PI, num2pi, num4pi);
+    if(pi)
+        pi, num8pi = check(size4PI, size8PI, num4pi, num8pi);
+    if(pi)
+        pi, num16pi = check(size8PI, size16PI, num8pi, num16pi);
 }
